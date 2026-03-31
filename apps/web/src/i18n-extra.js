@@ -112,7 +112,7 @@ export const extraTranslations = {
       loggingIn: 'Logging in...',
       loginFailed: 'Unable to login right now.',
       demoCredentials: 'Demo credentials',
-      demoCredentialsHint: 'Use `superadmin / superadmin123` for the super admin panel or `admin / admin123` for the store admin panel.',
+      demoCredentialsHint: 'Default credentials are `superadmin / superadmin123` and `admin / admin123`, unless you override them in your environment variables.',
     },
     adminShell: {
       workspace: 'Workspace',
@@ -288,7 +288,7 @@ export const extraTranslations = {
       loggingIn: 'جارٍ تسجيل الدخول...',
       loginFailed: 'تعذر تسجيل الدخول حالياً.',
       demoCredentials: 'بيانات الدخول التجريبية',
-      demoCredentialsHint: 'استخدم `superadmin / superadmin123` للمشرف العام أو `admin / admin123` للوحة المدير.',
+      demoCredentialsHint: 'بيانات الدخول الافتراضية هي `superadmin / superadmin123` و `admin / admin123` ما لم تقم بتغييرها عبر متغيرات البيئة.',
     },
     adminShell: {
       workspace: 'مساحة العمل',
