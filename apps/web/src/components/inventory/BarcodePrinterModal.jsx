@@ -31,7 +31,7 @@ export default function BarcodePrinterModal({ isOpen, onClose, product }) {
         <div className="mt-6 rounded-[1.75rem] border border-dashed border-white/15 bg-white p-8 text-slate-950">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">VITALBLAZE</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">BUYSIAL ERP</p>
               <h4 className="mt-3 text-2xl font-semibold text-slate-950">{productName}</h4>
               <p className="mt-2 text-sm text-slate-500">{product.sku}</p>
             </div>

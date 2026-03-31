@@ -7,7 +7,7 @@ import ZatcaQrPreview from './ZatcaQrPreview.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
 
 const initialBlueprint = {
-  storeName: 'VITALBLAZE Express',
+  storeName: 'Buysial ERP Express',
   vatNumber: '300123456700003',
   businessType: BUSINESS_TYPES.BAKALA,
   generatedAt: '',

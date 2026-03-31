@@ -6,7 +6,7 @@ const router = Router();
 router.get('/health', (_req, res) => {
   res.json({
     status: 'ok',
-    service: 'vitalblaze-api',
+    service: 'buysial-erp-api',
     databaseReady: _req.app.locals.databaseReady,
     timestamp: new Date().toISOString(),
   });

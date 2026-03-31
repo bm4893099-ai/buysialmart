@@ -3,14 +3,16 @@ import { useTranslation } from 'react-i18next';
 import LogoMark from '../ui/LogoMark.jsx';
 import LanguageToggle from '../ui/LanguageToggle.jsx';
 import Button from '../ui/Button.jsx';
+import { getPanelPathForRole, useAdminSession } from '../../utils/adminSession.js';
 
 export default function SiteHeader() {
   const { t } = useTranslation();
   const location = useLocation();
+  const { session, clearSession } = useAdminSession();
+  const panelPath = session?.user ? getPanelPathForRole(session.user.role) : '/admin';
 
   const navigation = [
     { key: 'home', label: t('nav.home'), to: '/' },
-    { key: 'superAdmin', label: t('nav.superAdmin'), to: '/super-admin' },
     { key: 'inventory', label: t('workspaceNav.inventory'), to: '/inventory' },
     { key: 'pos', label: t('workspaceNav.pos'), to: '/pos' },
     { key: 'analytics', label: t('workspaceNav.analytics'), to: '/analytics' },
@@ -43,9 +45,14 @@ export default function SiteHeader() {
 
         <div className="flex items-center gap-3">
           <LanguageToggle />
-          <Button className="hidden sm:inline-flex" to="/super-admin" variant="secondary">
-            {t('common.dashboard')}
+          <Button className="hidden sm:inline-flex" to={panelPath} variant="secondary">
+            {session?.user ? t('common.openPanel') : t('common.adminLogin')}
           </Button>
+          {session?.user ? (
+            <Button className="hidden sm:inline-flex" onClick={clearSession} variant="ghost">
+              {t('common.logout')}
+            </Button>
+          ) : null}
         </div>
       </div>
     </header>

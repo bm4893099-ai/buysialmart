@@ -22,11 +22,11 @@ export function createAuthRouter({ jwtSecret }) {
     const defaultTenantId = process.env.SUPER_ADMIN_TENANT_ID || buildDefaultTenantId();
 
     const {
-      email = process.env.SUPER_ADMIN_EMAIL || 'operator@vitalblaze.sa',
+      email = process.env.SUPER_ADMIN_EMAIL || 'admin@buysialerp.sa',
       role = USER_ROLES.SUPER_ADMIN,
       tenantId = defaultTenantId,
       businessType = resolveSupportedBusinessType(process.env.SUPER_ADMIN_BUSINESS_TYPE),
-      name = process.env.SUPER_ADMIN_NAME || 'Demo Operator',
+      name = process.env.SUPER_ADMIN_NAME || 'Buysial ERP Admin',
     } = req.body || {};
 
     if (!Object.values(USER_ROLES).includes(role)) {

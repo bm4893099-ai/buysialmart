@@ -22,7 +22,7 @@ export function createApp({ clientOrigin, jwtSecret, databaseReady = false, stat
 
   app.get('/api', (_req, res) => {
     res.json({
-      message: 'VITALBLAZE API is running.',
+      message: 'Buysial ERP API is running.',
       databaseReady: app.locals.databaseReady,
     });
   });

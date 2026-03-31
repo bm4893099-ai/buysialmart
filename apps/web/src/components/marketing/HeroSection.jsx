@@ -1,6 +1,7 @@
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { marketingHighlights } from '../../data/marketing.js';
+import { resolveLocalizedValue, useSiteContent } from '../../utils/siteContent.js';
 import Button from '../ui/Button.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
 
@@ -93,7 +94,9 @@ function FloatingDashboardMockup() {
 }
 
 export default function HeroSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { siteContent } = useSiteContent();
+  const language = i18n.resolvedLanguage || 'en';
 
   return (
     <section className="relative overflow-hidden bg-hero-radial">
@@ -101,18 +104,18 @@ export default function HeroSection() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 pb-16 pt-16 lg:grid-cols-[1fr_0.95fr] lg:px-8 lg:pb-24 lg:pt-24">
         <div className="relative flex flex-col justify-center">
           <div className="mb-6 inline-flex w-fit rounded-full border border-indigo-400/20 bg-indigo-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-indigo-100">
-            {t('hero.badge')}
+            {resolveLocalizedValue(siteContent.hero.badge, language)}
           </div>
 
           <h1 className="max-w-3xl text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            <span className="text-gradient">{t('hero.title')}</span>
+            <span className="text-gradient">{resolveLocalizedValue(siteContent.hero.title, language)}</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">{t('hero.subtitle')}</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">{resolveLocalizedValue(siteContent.hero.subtitle, language)}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button to="/super-admin">{t('common.startTrial')}</Button>
-            <Button to="/super-admin" variant="secondary">
-              <span>{t('common.viewDemo')}</span>
+            <Button to="/admin">{t('common.adminLogin')}</Button>
+            <Button to="/admin" variant="secondary">
+              <span>{t('common.openPanel')}</span>
               <ArrowUpRight className="ms-2 h-4 w-4" />
             </Button>
           </div>

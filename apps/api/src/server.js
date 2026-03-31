@@ -34,11 +34,11 @@ async function startServer() {
   });
 
   app.listen(port, () => {
-    console.log(`VITALBLAZE API listening on http://localhost:${port}`);
+    console.log(`Buysial ERP API listening on http://localhost:${port}`);
   });
 }
 
 startServer().catch((error) => {
-  console.error('Failed to start VITALBLAZE API:', error);
+  console.error('Failed to start Buysial ERP API:', error);
   process.exit(1);
 });

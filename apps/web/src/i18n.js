@@ -6,13 +6,16 @@ const resources = {
   en: {
     translation: {
       common: {
-        brand: 'VITALBLAZE',
+        brand: 'Buysial ERP',
         language: 'العربية',
         dashboard: 'Super Admin',
         marketing: 'Marketing',
         startTrial: 'Start Free Trial',
         viewDemo: 'View Demo',
         contact: 'Contact Sales',
+        adminLogin: 'Admin Login',
+        openPanel: 'Open Panel',
+        logout: 'Logout',
         monthly: 'Monthly',
         yearly: 'Yearly',
         enabled: 'Enabled',
@@ -41,7 +44,7 @@ const resources = {
         secondaryStat: 'Phase 1 & 2 ready invoicing',
         floatingTitle: 'Live Operations Snapshot',
         live: 'Live',
-        controlCloud: 'VITALBLAZE Control Cloud',
+        controlCloud: 'Buysial ERP Control Cloud',
         todayRevenue: 'Today Revenue',
         weekOverWeek: '+14.8% WoW',
         activeRegisters: 'Active Registers',
@@ -111,9 +114,9 @@ const resources = {
       },
       footer: {
         description:
-          'VITALBLAZE powers premium retail execution for Saudi merchants with ZATCA-ready workflows, elegant UX, and cloud-native scale.',
+          'Buysial ERP powers premium retail execution for Saudi merchants with ZATCA-ready workflows, elegant UX, and cloud-native scale.',
         location: 'Dammam, KSA',
-        email: 'hello@vitalblaze.sa',
+        email: 'bm4893099@gmail.com',
       },
       superAdmin: {
         eyebrow: 'Super Admin Control Center',
@@ -128,7 +131,8 @@ const resources = {
         limitedFeatures: 'Limited or hidden features',
         qrHint: 'This QR preview is generated client-side from the tenant review data using the strict TLV utility.',
         awaitingQrInput: 'Awaiting valid store name and VAT number.',
-        defaultSellerName: 'VITALBLAZE Retail',
+        defaultSellerName: 'Buysial ERP Retail',
+        contentManager: 'Landing Page Content Manager',
       },
       form: {
         profile: 'Business Profile',
@@ -172,7 +176,7 @@ const resources = {
       },
       nav: {
         home: 'Home',
-        superAdmin: 'Super Admin Demo',
+        superAdmin: 'Super Admin Panel',
       },
       ...extraTranslations.en,
     },
@@ -180,13 +184,16 @@ const resources = {
   ar: {
     translation: {
       common: {
-        brand: 'VITALBLAZE',
+        brand: 'Buysial ERP',
         language: 'English',
         dashboard: 'لوحة المشرف العام',
         marketing: 'الموقع التعريفي',
         startTrial: 'ابدأ التجربة المجانية',
         viewDemo: 'عرض تجريبي',
         contact: 'تواصل مع المبيعات',
+        adminLogin: 'دخول الإدارة',
+        openPanel: 'فتح اللوحة',
+        logout: 'تسجيل الخروج',
         monthly: 'شهري',
         yearly: 'سنوي',
         enabled: 'مفعل',
@@ -206,7 +213,7 @@ const resources = {
         secondaryStat: 'فواتير جاهزة للمرحلتين 1 و 2',
         floatingTitle: 'لقطة تشغيلية مباشرة',
         live: 'مباشر',
-        controlCloud: 'سحابة تحكم VITALBLAZE',
+        controlCloud: 'سحابة تحكم Buysial ERP',
         todayRevenue: 'إيراد اليوم',
         weekOverWeek: '+14.8% عن الأسبوع السابق',
         activeRegisters: 'نقاط البيع النشطة',
@@ -276,9 +283,9 @@ const resources = {
       },
       footer: {
         description:
-          'تشغّل VITALBLAZE التنفيذ الاحترافي لتجار التجزئة في السعودية عبر سير عمل متوافق مع زاتكا وتجربة استخدام أنيقة وقابلية توسع سحابية.',
+          'تشغّل Buysial ERP التنفيذ الاحترافي لتجار التجزئة في السعودية عبر سير عمل متوافق مع زاتكا وتجربة استخدام أنيقة وقابلية توسع سحابية.',
         location: 'الدمام، المملكة العربية السعودية',
-        email: 'hello@vitalblaze.sa',
+        email: 'bm4893099@gmail.com',
       },
       superAdmin: {
         eyebrow: 'مركز تحكم المشرف العام',
@@ -293,7 +300,8 @@ const resources = {
         limitedFeatures: 'الميزات المحدودة أو المخفية',
         qrHint: 'يتم توليد معاينة QR هذه داخل المتصفح من بيانات مراجعة المستأجر باستخدام أداة TLV الصارمة.',
         awaitingQrInput: 'في انتظار اسم متجر صحيح ورقم ضريبي صحيح.',
-        defaultSellerName: 'VITALBLAZE Retail',
+        defaultSellerName: 'Buysial ERP Retail',
+        contentManager: 'مدير محتوى صفحة الهبوط',
       },
       form: {
         profile: 'ملف النشاط',
@@ -337,7 +345,7 @@ const resources = {
       },
       nav: {
         home: 'الرئيسية',
-        superAdmin: 'عرض المشرف العام',
+        superAdmin: 'لوحة المشرف العام',
       },
       ...extraTranslations.ar,
     },

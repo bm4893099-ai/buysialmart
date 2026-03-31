@@ -104,7 +104,7 @@ export default function CreateTenantForm({ onBlueprintGenerated }) {
       <form className="mt-8" onSubmit={handleSubmit}>
         {currentStep === 0 ? (
           <div className="grid gap-5 md:grid-cols-2">
-            <Field label={t('form.storeName')} name="storeName" onChange={(event) => updateField('storeName', event.target.value)} placeholder="VITALBLAZE Downtown" value={formState.storeName} />
+            <Field label={t('form.storeName')} name="storeName" onChange={(event) => updateField('storeName', event.target.value)} placeholder="Buysial ERP Downtown" value={formState.storeName} />
             <Field label={t('form.logoUrl')} name="logoUrl" onChange={(event) => updateField('logoUrl', event.target.value)} placeholder="https://..." value={formState.logoUrl} />
             <Field label={t('form.crNumber')} name="crNumber" onChange={(event) => updateField('crNumber', event.target.value)} placeholder="2051XXXXXX" value={formState.crNumber} />
             <Field as="select" label={t('form.businessType')} name="businessType" onChange={(event) => updateField('businessType', event.target.value)} value={formState.businessType}>
