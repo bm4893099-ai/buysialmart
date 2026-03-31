@@ -5,7 +5,7 @@ const ADMIN_SESSION_STORAGE_KEY = 'buysial-admin-session';
 const ADMIN_SESSION_EVENT = 'buysial-admin-session-updated';
 
 export function getPanelPathForRole(role) {
-  return role === USER_ROLES.SUPER_ADMIN ? '/super-admin' : '/admin/panel';
+  return role === USER_ROLES.SUPER_ADMIN ? '/admin/panel/tenants' : '/admin/panel';
 }
 
 export function readStoredAdminSession() {

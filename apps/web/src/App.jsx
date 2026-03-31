@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { USER_ROLES } from '@vitalblaze/shared';
 import { useTranslation } from 'react-i18next';
+import AdminShellLayout from './components/admin/AdminShellLayout.jsx';
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+import AdminAnalyticsPage from './pages/AdminAnalyticsPage.jsx';
+import AdminContentPage from './pages/AdminContentPage.jsx';
+import AdminInventoryPage from './pages/AdminInventoryPage.jsx';
 import AdminLoginPage from './pages/AdminLoginPage.jsx';
 import AdminPanelPage from './pages/AdminPanelPage.jsx';
+import AdminPosPage from './pages/AdminPosPage.jsx';
+import AdminTenantsPage from './pages/AdminTenantsPage.jsx';
 import AnalyticsPage from './pages/AnalyticsPage.jsx';
 import InventoryPage from './pages/InventoryPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import PosPage from './pages/PosPage.jsx';
-import SuperAdminPage from './pages/SuperAdminPage.jsx';
 
 export default function App() {
   const { i18n } = useTranslation();
@@ -30,10 +35,24 @@ export default function App() {
           path="/admin/panel"
           element={(
             <ProtectedRoute allowedRoles={[USER_ROLES.STORE_ADMIN, USER_ROLES.SUPER_ADMIN]}>
-              <AdminPanelPage />
+              <AdminShellLayout />
             </ProtectedRoute>
           )}
-        />
+        >
+          <Route index element={<AdminPanelPage />} />
+          <Route path="inventory" element={<AdminInventoryPage />} />
+          <Route path="pos" element={<AdminPosPage />} />
+          <Route path="analytics" element={<AdminAnalyticsPage />} />
+          <Route path="content" element={<AdminContentPage />} />
+          <Route
+            path="tenants"
+            element={(
+              <ProtectedRoute allowedRoles={[USER_ROLES.SUPER_ADMIN]}>
+                <AdminTenantsPage />
+              </ProtectedRoute>
+            )}
+          />
+        </Route>
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
         <Route path="/pos" element={<PosPage />} />
@@ -41,7 +60,7 @@ export default function App() {
           path="/super-admin"
           element={(
             <ProtectedRoute allowedRoles={[USER_ROLES.SUPER_ADMIN]}>
-              <SuperAdminPage />
+              <Navigate replace to="/admin/panel/tenants" />
             </ProtectedRoute>
           )}
         />

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { BUSINESS_TYPE_CAPABILITIES, BUSINESS_TYPES } from '@vitalblaze/shared';
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import Button from '../ui/Button.jsx';
 import Field from '../ui/Field.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
@@ -26,14 +27,22 @@ const initialState = {
 };
 
 function StepBadge({ active, completed, children }) {
+  const { isDark } = useAdminTheme();
+
   return (
     <div
       className={`flex min-h-10 min-w-10 items-center justify-center rounded-2xl border text-sm font-semibold transition ${
         completed
-          ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300'
+          ? isDark
+            ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300'
+            : 'border-emerald-200 bg-emerald-50 text-emerald-700'
           : active
-            ? 'border-indigo-400/30 bg-indigo-500/15 text-indigo-100'
-            : 'border-white/10 bg-white/5 text-slate-400'
+            ? isDark
+              ? 'border-indigo-400/30 bg-indigo-500/15 text-indigo-100'
+              : 'border-indigo-200 bg-indigo-50 text-indigo-700'
+            : isDark
+              ? 'border-white/10 bg-white/5 text-slate-400'
+              : 'border-slate-200 bg-slate-50 text-slate-500'
       }`.trim()}
     >
       {children}
@@ -43,6 +52,7 @@ function StepBadge({ active, completed, children }) {
 
 export default function CreateTenantForm({ onBlueprintGenerated }) {
   const { t } = useTranslation();
+  const { isDark } = useAdminTheme();
   const [currentStep, setCurrentStep] = useState(0);
   const [formState, setFormState] = useState(initialState);
 
@@ -94,8 +104,8 @@ export default function CreateTenantForm({ onBlueprintGenerated }) {
               {index + 1}
             </StepBadge>
             <div className="text-start">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{t('form.step')} {index + 1}</p>
-              <p className="text-sm font-medium text-slate-100">{t(`form.${step}`)}</p>
+              <p className={isDark ? 'text-xs uppercase tracking-[0.2em] text-slate-400' : 'text-xs uppercase tracking-[0.2em] text-slate-500'}>{t('form.step')} {index + 1}</p>
+              <p className={isDark ? 'text-sm font-medium text-slate-100' : 'text-sm font-medium text-slate-800'}>{t(`form.${step}`)}</p>
             </div>
           </div>
         ))}
@@ -138,23 +148,23 @@ export default function CreateTenantForm({ onBlueprintGenerated }) {
 
         {currentStep === 3 ? (
           <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="space-y-4 rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+            <div className={isDark ? 'space-y-4 rounded-[1.75rem] border border-white/10 bg-white/5 p-5' : 'space-y-4 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5'}>
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('form.review')}</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">{formState.storeName || t('form.tenantBlueprint')}</h3>
+                <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('form.review')}</p>
+                <h3 className={isDark ? 'mt-2 text-xl font-semibold text-white' : 'mt-2 text-xl font-semibold text-slate-900'}>{formState.storeName || t('form.tenantBlueprint')}</h3>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300">
-                  <span className="block text-slate-400">{t('form.businessType')}</span>
-                  <span className="mt-2 block font-medium text-white">{t(`businessTypes.${formState.businessType}`)}</span>
+                <div className={isDark ? 'rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300' : 'rounded-2xl bg-white p-4 text-sm text-slate-600'}>
+                  <span className={isDark ? 'block text-slate-400' : 'block text-slate-500'}>{t('form.businessType')}</span>
+                  <span className={isDark ? 'mt-2 block font-medium text-white' : 'mt-2 block font-medium text-slate-900'}>{t(`businessTypes.${formState.businessType}`)}</span>
                 </div>
-                <div className="rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300">
-                  <span className="block text-slate-400">{t('form.vatNumber')}</span>
-                  <span className="mt-2 block font-medium text-white">{formState.vatNumber || '—'}</span>
+                <div className={isDark ? 'rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300' : 'rounded-2xl bg-white p-4 text-sm text-slate-600'}>
+                  <span className={isDark ? 'block text-slate-400' : 'block text-slate-500'}>{t('form.vatNumber')}</span>
+                  <span className={isDark ? 'mt-2 block font-medium text-white' : 'mt-2 block font-medium text-slate-900'}>{formState.vatNumber || '—'}</span>
                 </div>
-                <div className="rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300 sm:col-span-2">
-                  <span className="block text-slate-400">{t('form.nationalAddress')}</span>
-                  <span className="mt-2 block font-medium text-white">
+                <div className={isDark ? 'rounded-2xl bg-slate-950/60 p-4 text-sm text-slate-300 sm:col-span-2' : 'rounded-2xl bg-white p-4 text-sm text-slate-600 sm:col-span-2'}>
+                  <span className={isDark ? 'block text-slate-400' : 'block text-slate-500'}>{t('form.nationalAddress')}</span>
+                  <span className={isDark ? 'mt-2 block font-medium text-white' : 'mt-2 block font-medium text-slate-900'}>
                     {[
                       formState.nationalAddress.buildingNumber,
                       formState.nationalAddress.street,
@@ -169,25 +179,25 @@ export default function CreateTenantForm({ onBlueprintGenerated }) {
               </div>
             </div>
 
-            <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{t('form.modePreview')}</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">{t(`businessTypes.${formState.businessType}`)}</h3>
+            <div className={isDark ? 'rounded-[1.75rem] border border-white/10 bg-white/5 p-5' : 'rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5'}>
+              <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-slate-400' : 'text-xs uppercase tracking-[0.24em] text-slate-500'}>{t('form.modePreview')}</p>
+              <h3 className={isDark ? 'mt-2 text-lg font-semibold text-white' : 'mt-2 text-lg font-semibold text-slate-900'}>{t(`businessTypes.${formState.businessType}`)}</h3>
               <div className="mt-5 space-y-4">
                 <div>
-                  <p className="text-sm font-semibold text-emerald-300">{t('superAdmin.enabledFeatures')}</p>
+                  <p className={isDark ? 'text-sm font-semibold text-emerald-300' : 'text-sm font-semibold text-emerald-700'}>{t('superAdmin.enabledFeatures')}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {capabilityProfile.enabled.map((capability) => (
-                      <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300" key={capability}>
+                      <span className={isDark ? 'rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300' : 'rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700'} key={capability}>
                         {t(`capabilityLabels.${capability}`)}
                       </span>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-amber-300">{t('superAdmin.limitedFeatures')}</p>
+                  <p className={isDark ? 'text-sm font-semibold text-amber-300' : 'text-sm font-semibold text-amber-700'}>{t('superAdmin.limitedFeatures')}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {capabilityProfile.limited.map((capability) => (
-                      <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-300" key={capability}>
+                      <span className={isDark ? 'rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-300' : 'rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700'} key={capability}>
                         {t(`capabilityLabels.${capability}`)}
                       </span>
                     ))}

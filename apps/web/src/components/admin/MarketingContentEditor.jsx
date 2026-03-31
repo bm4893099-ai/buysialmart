@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import Button from '../ui/Button.jsx';
 import Field from '../ui/Field.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
@@ -14,21 +15,22 @@ function cloneContent(content) {
 }
 
 function PlanEditor({ cycleKey, draft, language, onFeatureChange, onPlanFieldChange, t }) {
+  const { isDark } = useAdminTheme();
   const cycleLabel = cycleKey === 'monthlyPlans' ? t('common.monthly') : t('common.yearly');
 
   return (
-    <div className="space-y-4 rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+    <div className={isDark ? 'space-y-4 rounded-[1.75rem] border border-white/10 bg-white/5 p-5' : 'space-y-4 rounded-[1.75rem] border border-slate-200 bg-white p-5'}>
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.pricingCycle')}</p>
-          <h3 className="mt-2 text-lg font-semibold text-white">{cycleLabel}</h3>
+          <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.pricingCycle')}</p>
+          <h3 className={isDark ? 'mt-2 text-lg font-semibold text-white' : 'mt-2 text-lg font-semibold text-slate-900'}>{cycleLabel}</h3>
         </div>
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">
         {draft.pricing[cycleKey].map((plan) => (
-          <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/50 p-4" key={`${cycleKey}-${plan.key}`}>
-            <p className="text-xs uppercase tracking-[0.22em] text-slate-400">{plan.key}</p>
+          <div className={isDark ? 'rounded-[1.5rem] border border-white/10 bg-slate-950/50 p-4' : 'rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4'} key={`${cycleKey}-${plan.key}`}>
+            <p className={isDark ? 'text-xs uppercase tracking-[0.22em] text-slate-400' : 'text-xs uppercase tracking-[0.22em] text-slate-500'}>{plan.key}</p>
             <div className="mt-4 grid gap-4">
               <Field label={t('adminContent.planName')} name={`${cycleKey}-${plan.key}-name`} onChange={(event) => onPlanFieldChange(cycleKey, plan.key, 'name', language, event.target.value)} value={plan.name[language]} />
               <Field label={t('adminContent.planPrice')} name={`${cycleKey}-${plan.key}-price`} onChange={(event) => onPlanFieldChange(cycleKey, plan.key, 'price', null, event.target.value)} value={plan.price} />
@@ -44,6 +46,7 @@ function PlanEditor({ cycleKey, draft, language, onFeatureChange, onPlanFieldCha
 
 export default function MarketingContentEditor({ panelLabel }) {
   const { t, i18n } = useTranslation();
+  const { isDark } = useAdminTheme();
   const { siteContent, saveSiteContent, resetSiteContent } = useSiteContent();
   const [draft, setDraft] = useState(() => cloneContent(siteContent));
   const [language, setLanguage] = useState(i18n.resolvedLanguage || 'en');
@@ -154,8 +157,8 @@ export default function MarketingContentEditor({ panelLabel }) {
       <GlassPanel className="p-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.editLanguage')}</p>
-            <p className="mt-2 text-sm text-slate-300">{t('adminContent.languageHint')}</p>
+            <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.editLanguage')}</p>
+            <p className={isDark ? 'mt-2 text-sm text-slate-300' : 'mt-2 text-sm text-slate-600'}>{t('adminContent.languageHint')}</p>
           </div>
 
           <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
@@ -169,7 +172,7 @@ export default function MarketingContentEditor({ panelLabel }) {
       </GlassPanel>
 
       <GlassPanel className="p-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.brandSection')}</p>
+        <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.brandSection')}</p>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           <Field label={t('adminContent.brandName')} name="brand-name" onChange={(event) => updateLocalizedSection('brand', 'name', event.target.value)} value={draft.brand.name[language]} />
           <Field label={t('adminContent.brandShortMark')} name="brand-short-mark" onChange={(event) => setDraft((currentDraft) => ({ ...currentDraft, brand: { ...currentDraft.brand, shortMark: event.target.value } }))} value={draft.brand.shortMark} />
@@ -178,7 +181,7 @@ export default function MarketingContentEditor({ panelLabel }) {
       </GlassPanel>
 
       <GlassPanel className="p-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.heroSection')}</p>
+        <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.heroSection')}</p>
         <div className="mt-5 grid gap-4">
           <Field label={t('adminContent.heroBadge')} name="hero-badge" onChange={(event) => updateLocalizedSection('hero', 'badge', event.target.value)} value={draft.hero.badge[language]} />
           <Field label={t('adminContent.heroTitle')} name="hero-title" onChange={(event) => updateLocalizedSection('hero', 'title', event.target.value)} value={draft.hero.title[language]} />
@@ -187,7 +190,7 @@ export default function MarketingContentEditor({ panelLabel }) {
       </GlassPanel>
 
       <GlassPanel className="p-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.pricingSection')}</p>
+        <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.pricingSection')}</p>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           <Field label={t('adminContent.pricingTitle')} name="pricing-title" onChange={(event) => updateLocalizedSection('pricing', 'title', event.target.value)} value={draft.pricing.title[language]} />
           <Field label={t('adminContent.pricingSaveBadge')} name="pricing-save-badge" onChange={(event) => updateLocalizedSection('pricing', 'saveBadge', event.target.value)} value={draft.pricing.saveBadge[language]} />
@@ -208,7 +211,7 @@ export default function MarketingContentEditor({ panelLabel }) {
       ))}
 
       <GlassPanel className="p-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('adminContent.footerSection')}</p>
+        <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('adminContent.footerSection')}</p>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           <Field label={t('adminContent.footerExploreTitle')} name="footer-explore-title" onChange={(event) => updateLocalizedSection('footer', 'exploreTitle', event.target.value)} value={draft.footer.exploreTitle[language]} />
           <Field label={t('adminContent.footerContactTitle')} name="footer-contact-title" onChange={(event) => updateLocalizedSection('footer', 'contactTitle', event.target.value)} value={draft.footer.contactTitle[language]} />

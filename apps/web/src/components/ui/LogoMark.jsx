@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import { resolveLocalizedValue, useSiteContent } from '../../utils/siteContent.js';
 
 export default function LogoMark() {
   const { i18n } = useTranslation();
+  const { isDark } = useAdminTheme();
   const { siteContent } = useSiteContent();
   const language = i18n.resolvedLanguage || 'en';
 
@@ -12,8 +14,8 @@ export default function LogoMark() {
         <span className="text-sm font-black tracking-[0.2em] text-white">{siteContent.brand.shortMark}</span>
       </div>
       <div className="text-start">
-        <div className="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-100">{resolveLocalizedValue(siteContent.brand.name, language)}</div>
-        <div className="text-xs text-slate-400">{resolveLocalizedValue(siteContent.brand.tagline, language)}</div>
+        <div className={isDark ? 'text-sm font-semibold uppercase tracking-[0.3em] text-indigo-100' : 'text-sm font-semibold uppercase tracking-[0.3em] text-indigo-700'}>{resolveLocalizedValue(siteContent.brand.name, language)}</div>
+        <div className={isDark ? 'text-xs text-slate-400' : 'text-xs text-slate-500'}>{resolveLocalizedValue(siteContent.brand.tagline, language)}</div>
       </div>
     </div>
   );

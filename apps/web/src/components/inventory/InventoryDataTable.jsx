@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import Button from '../ui/Button.jsx';
 import Field from '../ui/Field.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
@@ -27,6 +28,7 @@ function getInventoryStatus(product) {
 
 export default function InventoryDataTable({ businessType, products, onPrintLabel }) {
   const { i18n, t } = useTranslation();
+  const { isDark } = useAdminTheme();
   const language = i18n.resolvedLanguage === 'ar' ? 'ar' : 'en';
   const [search, setSearch] = useState('');
   const columnHelper = createColumnHelper();
@@ -60,8 +62,8 @@ export default function InventoryDataTable({ businessType, products, onPrintLabe
         header: t('inventory.product'),
         cell: (info) => (
           <div className="text-start">
-            <div className="font-medium text-white">{info.getValue()}</div>
-            <div className="mt-1 text-xs text-slate-400">{info.row.original.isWeighedItem ? t('printer.weightedSticker') : t('printer.shelfLabel')}</div>
+            <div className={isDark ? 'font-medium text-white' : 'font-medium text-slate-900'}>{info.getValue()}</div>
+            <div className={isDark ? 'mt-1 text-xs text-slate-400' : 'mt-1 text-xs text-slate-500'}>{info.row.original.isWeighedItem ? t('printer.weightedSticker') : t('printer.shelfLabel')}</div>
           </div>
         ),
       }),
@@ -101,7 +103,7 @@ export default function InventoryDataTable({ businessType, products, onPrintLabe
         ),
       }),
     ],
-    [columnHelper, language, onPrintLabel, t]
+    [columnHelper, isDark, language, onPrintLabel, t]
   );
 
   const table = useReactTable({
@@ -127,30 +129,30 @@ export default function InventoryDataTable({ businessType, products, onPrintLabe
       </div>
 
       <div className="mt-6 overflow-x-auto">
-        <table className="min-w-full divide-y divide-white/10">
+        <table className={isDark ? 'min-w-full divide-y divide-white/10' : 'min-w-full divide-y divide-slate-200'}>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th className="px-4 py-4 text-start text-xs font-semibold uppercase tracking-[0.18em] text-slate-400" key={header.id}>
+                  <th className={isDark ? 'px-4 py-4 text-start text-xs font-semibold uppercase tracking-[0.18em] text-slate-400' : 'px-4 py-4 text-start text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'} key={header.id}>
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className={isDark ? 'divide-y divide-white/5' : 'divide-y divide-slate-100'}>
             {table.getRowModel().rows.length === 0 ? (
               <tr>
-                <td className="px-4 py-8 text-center text-sm text-slate-400" colSpan={columns.length}>
+                <td className={isDark ? 'px-4 py-8 text-center text-sm text-slate-400' : 'px-4 py-8 text-center text-sm text-slate-500'} colSpan={columns.length}>
                   {t('inventory.noRows')}
                 </td>
               </tr>
             ) : (
               table.getRowModel().rows.map((row) => (
-                <tr className="transition hover:bg-white/5" key={row.id}>
+                <tr className={isDark ? 'transition hover:bg-white/5' : 'transition hover:bg-slate-50'} key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <td className="px-4 py-4 text-sm text-slate-200" key={cell.id}>
+                    <td className={isDark ? 'px-4 py-4 text-sm text-slate-200' : 'px-4 py-4 text-sm text-slate-700'} key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}

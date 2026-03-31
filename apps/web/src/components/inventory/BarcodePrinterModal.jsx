@@ -1,10 +1,12 @@
 import Barcode from 'react-barcode';
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import Button from '../ui/Button.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
 
 export default function BarcodePrinterModal({ isOpen, onClose, product }) {
   const { i18n, t } = useTranslation();
+  const { isDark } = useAdminTheme();
   const language = i18n.resolvedLanguage === 'ar' ? 'ar' : 'en';
 
   if (!isOpen || !product) {
@@ -15,12 +17,12 @@ export default function BarcodePrinterModal({ isOpen, onClose, product }) {
   const labelType = product.isWeighedItem ? t('printer.weightedSticker') : t('printer.shelfLabel');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-6 backdrop-blur-xl">
+    <div className={isDark ? 'fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-6 backdrop-blur-xl' : 'fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-6 backdrop-blur-xl'}>
       <GlassPanel className="w-full max-w-2xl p-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{labelType}</p>
-            <h3 className="mt-2 text-2xl font-semibold text-white">{t('printer.title')}</h3>
+            <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{labelType}</p>
+            <h3 className={isDark ? 'mt-2 text-2xl font-semibold text-white' : 'mt-2 text-2xl font-semibold text-slate-900'}>{t('printer.title')}</h3>
           </div>
           <div className="flex gap-3">
             <Button onClick={onClose} variant="ghost">{t('printer.close')}</Button>

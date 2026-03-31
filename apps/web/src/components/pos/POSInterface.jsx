@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Wifi, WifiOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useAdminTheme } from '../../utils/adminTheme.js';
 import Button from '../ui/Button.jsx';
 import Field from '../ui/Field.jsx';
 import GlassPanel from '../ui/GlassPanel.jsx';
@@ -9,15 +10,18 @@ import { buildCartLine, calculateCartTotals, resolveScannedProduct } from '../..
 import { getHeldCarts, getOfflineSales, queueOfflineSale, removeHeldCart, saveHeldCart } from '../../utils/indexedDb.js';
 
 function NotificationBanner({ message }) {
+  const { isDark } = useAdminTheme();
+
   if (!message) {
     return null;
   }
 
-  return <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm font-medium text-emerald-300">{message}</div>;
+  return <div className={isDark ? 'rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm font-medium text-emerald-300' : 'rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700'}>{message}</div>;
 }
 
 export default function POSInterface({ businessType, products }) {
   const { i18n, t } = useTranslation();
+  const { isDark } = useAdminTheme();
   const language = i18n.resolvedLanguage === 'ar' ? 'ar' : 'en';
   const [cartItems, setCartItems] = useState([]);
   const [scannerInput, setScannerInput] = useState('');
@@ -159,8 +163,8 @@ export default function POSInterface({ businessType, products }) {
         <GlassPanel className="p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('pos.productGrid')}</p>
-              <p className="mt-2 text-sm text-slate-300">{t('pos.scaleHint')}</p>
+              <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('pos.productGrid')}</p>
+              <p className={isDark ? 'mt-2 text-sm text-slate-300' : 'mt-2 text-sm text-slate-600'}>{t('pos.scaleHint')}</p>
             </div>
             <StatusBadge tone={isOnline ? 'success' : 'warning'}>
               <span className="inline-flex items-center gap-2">
@@ -183,12 +187,12 @@ export default function POSInterface({ businessType, products }) {
             <GlassPanel className="p-5" key={product.id}>
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-semibold text-white">{product.name[language] || product.name.en}</h3>
-                  <p className="mt-2 text-sm text-slate-400">{product.category[language] || product.category.en}</p>
+                  <h3 className={isDark ? 'text-lg font-semibold text-white' : 'text-lg font-semibold text-slate-900'}>{product.name[language] || product.name.en}</h3>
+                  <p className={isDark ? 'mt-2 text-sm text-slate-400' : 'mt-2 text-sm text-slate-500'}>{product.category[language] || product.category.en}</p>
                 </div>
                 {product.isWeighedItem ? <StatusBadge tone="warning">{t('pos.weighedUnit')}</StatusBadge> : null}
               </div>
-              <p className="mt-5 text-2xl font-semibold text-white">SAR {product.sellingPrice.toFixed(2)}</p>
+              <p className={isDark ? 'mt-5 text-2xl font-semibold text-white' : 'mt-5 text-2xl font-semibold text-slate-900'}>SAR {product.sellingPrice.toFixed(2)}</p>
               <Button className="mt-5 w-full justify-center" onClick={() => addResolvedProduct({ product, quantity: 1, unitPrice: product.sellingPrice, scalePayload: null })} variant="secondary">
                 {t('pos.addProduct')}
               </Button>
@@ -201,8 +205,8 @@ export default function POSInterface({ businessType, products }) {
         <GlassPanel className="p-6">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('pos.activeTicket')}</p>
-              <h3 className="mt-2 text-xl font-semibold text-white">{businessType}</h3>
+              <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('pos.activeTicket')}</p>
+              <h3 className={isDark ? 'mt-2 text-xl font-semibold text-white' : 'mt-2 text-xl font-semibold text-slate-900'}>{businessType}</h3>
             </div>
             <div className="flex gap-2">
               <StatusBadge tone="neutral">{t('pos.heldCount')}: {heldCarts.length}</StatusBadge>
@@ -212,15 +216,15 @@ export default function POSInterface({ businessType, products }) {
 
           <div className="mt-6 space-y-3">
             {cartItems.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-slate-400">{t('pos.emptyCart')}</div>
+              <div className={isDark ? 'rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-slate-400' : 'rounded-2xl border border-dashed border-slate-200 px-4 py-6 text-sm text-slate-500'}>{t('pos.emptyCart')}</div>
             ) : (
               cartItems.map((item) => (
-                <div className="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-4" key={item.id}>
+                <div className={isDark ? 'flex items-center justify-between rounded-2xl bg-white/5 px-4 py-4' : 'flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4'} key={item.id}>
                   <div className="text-start">
-                    <p className="font-medium text-white">{item.name[language] || item.name.en}</p>
-                    <p className="mt-1 text-sm text-slate-400">{t('pos.quantity')}: {item.quantity}</p>
+                    <p className={isDark ? 'font-medium text-white' : 'font-medium text-slate-900'}>{item.name[language] || item.name.en}</p>
+                    <p className={isDark ? 'mt-1 text-sm text-slate-400' : 'mt-1 text-sm text-slate-500'}>{t('pos.quantity')}: {item.quantity}</p>
                   </div>
-                  <div className="text-sm font-semibold text-white">SAR {(item.quantity * item.unitPrice).toFixed(2)}</div>
+                  <div className={isDark ? 'text-sm font-semibold text-white' : 'text-sm font-semibold text-slate-900'}>SAR {(item.quantity * item.unitPrice).toFixed(2)}</div>
                 </div>
               ))
             )}
@@ -231,16 +235,16 @@ export default function POSInterface({ businessType, products }) {
             <Field label={t('pos.mada')} name="madaAmount" onChange={(event) => setMadaAmount(event.target.value)} type="number" value={madaAmount} />
           </div>
 
-          <div className="mt-6 space-y-3 rounded-[1.5rem] bg-slate-950/70 p-5">
-            <div className="flex items-center justify-between text-sm text-slate-300">
+          <div className={isDark ? 'mt-6 space-y-3 rounded-[1.5rem] bg-slate-950/70 p-5' : 'mt-6 space-y-3 rounded-[1.5rem] bg-slate-100 p-5'}>
+            <div className={isDark ? 'flex items-center justify-between text-sm text-slate-300' : 'flex items-center justify-between text-sm text-slate-600'}>
               <span>{t('pos.subtotal')}</span>
               <span>SAR {totals.subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex items-center justify-between text-sm text-slate-300">
+            <div className={isDark ? 'flex items-center justify-between text-sm text-slate-300' : 'flex items-center justify-between text-sm text-slate-600'}>
               <span>{t('pos.vat')}</span>
               <span>SAR {totals.vat.toFixed(2)}</span>
             </div>
-            <div className="flex items-center justify-between text-base font-semibold text-white">
+            <div className={isDark ? 'flex items-center justify-between text-base font-semibold text-white' : 'flex items-center justify-between text-base font-semibold text-slate-900'}>
               <span>{t('pos.total')}</span>
               <span>SAR {totals.total.toFixed(2)}</span>
             </div>
@@ -254,16 +258,16 @@ export default function POSInterface({ businessType, products }) {
         </GlassPanel>
 
         <GlassPanel className="p-6">
-          <p className="text-xs uppercase tracking-[0.24em] text-indigo-200">{t('pos.resumeCart')}</p>
+          <p className={isDark ? 'text-xs uppercase tracking-[0.24em] text-indigo-200' : 'text-xs uppercase tracking-[0.24em] text-indigo-600'}>{t('pos.resumeCart')}</p>
           <div className="mt-4 space-y-3">
             {heldCarts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-slate-400">{t('pos.heldCarts')}: 0</div>
+              <div className={isDark ? 'rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-slate-400' : 'rounded-2xl border border-dashed border-slate-200 px-4 py-6 text-sm text-slate-500'}>{t('pos.heldCarts')}: 0</div>
             ) : (
               heldCarts.map((heldCart) => (
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-4" key={heldCart.id}>
+                <div className={isDark ? 'flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-4' : 'flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-4'} key={heldCart.id}>
                   <div>
-                    <p className="font-medium text-white">{heldCart.items.length} {t('pos.items')}</p>
-                    <p className="mt-1 text-sm text-slate-400">{new Date(heldCart.createdAt).toLocaleString()}</p>
+                    <p className={isDark ? 'font-medium text-white' : 'font-medium text-slate-900'}>{heldCart.items.length} {t('pos.items')}</p>
+                    <p className={isDark ? 'mt-1 text-sm text-slate-400' : 'mt-1 text-sm text-slate-500'}>{new Date(heldCart.createdAt).toLocaleString()}</p>
                   </div>
                   <Button onClick={() => handleResumeCart(heldCart.id)} variant="secondary">{t('pos.resumeCart')}</Button>
                 </div>
